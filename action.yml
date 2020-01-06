@@ -1,0 +1,27 @@
+name: 'Setup ElasticSearch'
+description: 'Setup ElasticSearch'
+author: 'getong'
+branding:
+  icon: 'database'
+  color: 'orange'
+inputs:
+  elasticsearch version:
+    description: 'Version of elasticsearch to use'
+    required: false
+    default: 'latest'
+  host port:
+    description: 'The port of host'
+    required: false
+    default: 9200
+  container port:
+    description: 'The port of container'
+    required: false
+    default: 9200
+  discovery type:
+    description: 'the discovery.type envionment'
+    required: false
+    default: 'single-node'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
