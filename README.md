@@ -9,7 +9,7 @@ See [action.yml](action.yml)
 Basic:
 ```yaml
 steps:
-- uses: getong/elasticsearch-action@v1
+- uses: getong/elasticsearch-action@v1.1
   with:
     elasticsearch version: '7.6.1'
     host port: 9200
