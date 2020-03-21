@@ -11,9 +11,11 @@ Basic:
 steps:
 - uses: getong/elasticsearch-action@v1
   with:
-    elasticsearch version: '7.5.1'
+    elasticsearch version: '7.6.1'
     host port: 9200
     container port: 9200
+    host node port: 9300
+    node port: 9300
     discovery type: 'single-node'
 ```
 
