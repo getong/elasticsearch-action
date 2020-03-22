@@ -1,0 +1,49 @@
+name: elasticsearch_ci
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: install curl
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y curl docker
+
+    - name: Configure sysctl limits
+      run: |
+        sudo swapoff -a
+        sudo sysctl -w vm.swappiness=1
+        sudo sysctl -w fs.file-max=262144
+        sudo sysctl -w vm.max_map_count=262144
+
+    - uses: getong/elasticsearch-action@v1.2
+      with:
+        elasticsearch version: '7.6.1'
+        host port: 9200
+        container port: 9200
+        host node port: 9300
+        node port: 9300
+        discovery type: 'single-node'
+##    - name: test the network
+##      run:
+##        docker run --network elastic --rm appropriate/curl --max-time 120 --retry 120 --retry-delay 1 --retry-connrefused --show-error --silent http://es1:9200
+
+##    - name: run elasticsearch
+##      run: |
+##        docker network create elastic
+##        docker run -e "node.name=es1" -e "cluster.name=docker-elasticsearch" -e "cluster.initial_master_nodes=es1" -e "discovery.seed_hosts=es1" -e "cluster.routing.allocation.disk.threshold_enabled=false" -e "bootstrap.memory_lock=true" -e "ES_JAVA_OPTS=-Xms1g -Xmx1g" -e "xpack.security.enabled=false" -e "xpack.license.self_generated.type=basic" --ulimit nofile=65536:65536 --ulimit memlock=-1:-1 -p 9200:9200 -p 9300:9300 --name="es1" --network=elastic -d elasticsearch:7.6.1
+##        docker run --network elastic --rm appropriate/curl --max-time 120 --retry 120 --retry-delay 1 --retry-connrefused --show-error --silent http://es1:9200
+
+##    - name: Runs Elasticsearch
+##      uses: elastic/elastic-github-actions/elasticsearch@master
+##      with:
+##        stack-version: 7.6.1
+
+    - name: get the stats
+      run: curl -X Get "localhost:9200/_cluster/stats?pretty=true"
+    - name: check the elasticsearch whether is running or not
+      run: curl -X GET "localhost:9200/_cat/nodes?v&pretty"
