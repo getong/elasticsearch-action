@@ -8,4 +8,4 @@ docker_run="$docker_run --network elastic -e 'node.name=es1' -e 'cluster.name=do
 
 sh -c "$docker_run"
 
-docker run --network elastic --rm appropriate/curl --max-time 120 --retry 120 --retry-delay 1 --retry-connrefused --show-error --silent http://es1:9200
+docker run --network elastic --rm curlimages/curl --max-time 120 --retry 120 --retry-delay 1 --retry-connrefused --show-error --silent http://es1:9200

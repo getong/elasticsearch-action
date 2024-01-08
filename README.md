@@ -16,9 +16,9 @@ steps:
     sudo sysctl -w fs.file-max=262144
     sudo sysctl -w vm.max_map_count=262144
 
-- uses: getong/elasticsearch-action@v1.2
+- uses: getong/elasticsearch-action@v1.3
   with:
-    elasticsearch version: '7.6.1'
+    elasticsearch version: '8.11.0'
     host port: 9200
     container port: 9200
     host node port: 9300
